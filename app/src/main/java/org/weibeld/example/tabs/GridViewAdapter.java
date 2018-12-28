@@ -17,11 +17,11 @@ import java.util.ArrayList;
 class GridViewAdapter extends BaseAdapter   {
     private Context context;
     private int layoutResourceId;
-    private ArrayList<Integer> data = new ArrayList<Integer>();
+    private ArrayList<TagsImg> data = new ArrayList<TagsImg>();
     int layout;
     LayoutInflater inf;
 
-    public GridViewAdapter(Context context, int layout, ArrayList<Integer> data) {
+    public GridViewAdapter(Context context, int layout, ArrayList<TagsImg> data) {
         this.context = context;
         this.data = data;
         this.layout = layout;
@@ -47,7 +47,7 @@ class GridViewAdapter extends BaseAdapter   {
             convertView = inf.inflate(layout, null);
 
         ImageView iv = (ImageView)convertView.findViewById(R.id.image);
-        Object m = data.get(position);
+        Object m = data.get(position).getImg();
         iv.setImageResource((Integer) m);
         return convertView;
 
