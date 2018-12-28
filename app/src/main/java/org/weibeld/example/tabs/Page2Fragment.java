@@ -54,6 +54,19 @@ public class Page2Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_page2, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.gridView);
 
+        getData();
+        GridViewAdapter adapter = new GridViewAdapter(this.getActivity(), R.layout.album_row, f);
+        gridView.setAdapter(adapter);
+
+
+
+        return view;
+    }
+    public void onClick(View v) {
+        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+            //error
+    }
+    public void getData() {
         // 친구, 상속자들, 여행, 특별한 순간
         f.add(new TagsImg(R.drawable.a1, new Integer[]{0, 2}));
         f.add(new TagsImg(R.drawable.a2, new Integer[]{0 }));
@@ -78,9 +91,5 @@ public class Page2Fragment extends Fragment {
         f.add(new TagsImg(R.drawable.a20, new Integer[]{ }));
         f.add(new TagsImg(R.drawable.a21, new Integer[]{ }));
          */
-        GridViewAdapter adapter = new GridViewAdapter(this.getActivity(), R.layout.album_row, f);
-        gridView.setAdapter(adapter);
-
-        return view;
     }
 }
