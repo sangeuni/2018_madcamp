@@ -1,5 +1,6 @@
 package org.weibeld.example.tabs;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -7,9 +8,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.content.res.AssetManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.weibeld.example.R;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,39 +28,28 @@ import android.widget.Toast;
 /* Fragment used as page 2 */
 public class Page2Fragment extends Fragment implements View.OnClickListener {
     GridView galleryGridView;
-    ArrayList<TagsImg> f = new ArrayList<TagsImg>();
+    ArrayList<Integer> f = new ArrayList<Integer>();
     ArrayList<Integer> activeTagIds = new ArrayList<Integer>();
-    int test=0;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Toast.makeText(getActivity(), "refreshed", Toast.LENGTH_SHORT).show();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page2, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.gridView);
 
-        Toast.makeText(getActivity(), "test is "+String.valueOf(activeTagIds), Toast.LENGTH_SHORT).show();
-
-
-        coloringActiveTags();
         getData(); //set f after f.clear();
 
         GridViewAdapter adapter = new GridViewAdapter(this.getActivity(), R.layout.album_row, f);
         gridView.setAdapter(adapter);
 
-        TextView one = (TextView) view.findViewById(R.id.textView0);
-        one.setOnClickListener(this); // calling onClick() method
-        TextView two = (TextView) view.findViewById(R.id.textView1);
-        two.setOnClickListener(this); // calling onClick() method
-        TextView three = (TextView) view.findViewById(R.id.textView2);
-        three.setOnClickListener(this); // calling onClick() method
-        TextView four = (TextView) view.findViewById(R.id.textView3);
-        four.setOnClickListener(this); // calling onClick() method
-        TextView five = (TextView) view.findViewById(R.id.textView4);
-        five.setOnClickListener(this); // calling onClick() method
-
+        view.findViewById(R.id.textView0).setOnClickListener(this);
+        view.findViewById(R.id.textView1).setOnClickListener(this);
+        view.findViewById(R.id.textView2).setOnClickListener(this);
+        view.findViewById(R.id.textView3).setOnClickListener(this);
+        view.findViewById(R.id.textView4).setOnClickListener(this);
+        view.findViewById(R.id.textView5).setOnClickListener(this);
         return view;
-    }
-    public void coloringActiveTags() {
-
     }
     public void refresh() {
         Fragment frg = null;
@@ -61,43 +60,71 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
         ft.commit();
     }
     public void onClick(View v) {
+        Integer ele = Integer.valueOf(v.getId()) - 2131165310; // textview 의 id 가 2131165310, 2131165311, ...
         // v.getId()를 activeTagIds 넣거나 빼기
-        if ( activeTagIds.contains(v.getId()) ) {
-            activeTagIds.remove(Integer.valueOf(v.getId())); // 그냥 써버리면 index꺼가 사라짐 ㅜㅜ
+        if ( activeTagIds.contains(ele) ) { // activate 된 태그면
+            activeTagIds.remove(Integer.valueOf(ele)); // 그냥 써버리면 index꺼가 사라짐 ㅜㅜ
+            v.setBackgroundResource(R.drawable.rounded_corner_deact);
         }
-        else activeTagIds.add(v.getId());
+        else {
+            activeTagIds.add(ele);
+            v.setBackgroundResource(R.drawable.rounded_corner);
+        }
+
+        //Toast.makeText(getActivity(), String.valueOf(activeTagIds), Toast.LENGTH_SHORT).show();
 
         refresh();
+    }
+    public boolean containActiveTags(JSONObject tags) {
+        try {
+            for (int i = 0; i < activeTagIds.size(); i++) {
+                if (tags.getBoolean(String.valueOf(activeTagIds.get(i)))) return true;
+            }
+            return false;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     public void getData() {
         // f 비우기
         f.clear();
         // TODO activeTagIds 에 따라서 data 넣기
+        try {
+            JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
+            JSONArray jsonArray = jsonObject.getJSONArray("TagsImg"); // 목록들
+            int count = 0;
+            Integer img;
+            JSONObject tags;
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                img = object.getInt("Img");
+                tags = object.getJSONObject("tags");
+                Log.e("json의 tags", String.valueOf(tags));
+                if (containActiveTags(tags)) f.add(img);
+                count++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //Toast.makeText(getActivity(), String.valueOf(f), Toast.LENGTH_SHORT).show();
 
-        // 친구, 상속자들, 여행, 특별한 순간
-        f.add(new TagsImg(R.drawable.a1, new Integer[]{0, 2}));
-        f.add(new TagsImg(R.drawable.a2, new Integer[]{0 }));
-        f.add(new TagsImg(R.drawable.a3, new Integer[]{0 }));
-        f.add(new TagsImg(R.drawable.a4, new Integer[]{0 }));
-        f.add(new TagsImg(R.drawable.a5, new Integer[]{0 }));
-        f.add(new TagsImg(R.drawable.a6, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a7, new Integer[]{2 }));
-        f.add(new TagsImg(R.drawable.a8, new Integer[]{2 }));
-        f.add(new TagsImg(R.drawable.a9, new Integer[]{2,3 }));
-        f.add(new TagsImg(R.drawable.a10, new Integer[]{0 }));
-        f.add(new TagsImg(R.drawable.a11, new Integer[]{1,3 }));
-        /*
-        f.add(new TagsImg(R.drawable.a12, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a13, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a14, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a15, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a16, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a17, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a18, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a19, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a20, new Integer[]{ }));
-        f.add(new TagsImg(R.drawable.a21, new Integer[]{ }));
-         */
     }
 
+    public String loadJSONFromAssets() {
+        String json = null;
+        AssetManager assetManager = getResources().getAssets();
+        try {
+            InputStream inputStream = assetManager.open("document2.json");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
+    }
 }

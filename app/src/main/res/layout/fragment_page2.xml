@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView0"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner_deact"
                 android:gravity="center"
                 android:textColor="#EEEEEE"
                 android:layout_alignParentRight="true"
@@ -26,12 +26,12 @@
                 android:clickable="true"
                 android:layout_margin="10dp"/>
             <TextView
-                android:text="친구"
+                android:text="아들램"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView1"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner_deact"
                 android:gravity="center"
                 android:textColor="#EEEEEE"
                 android:layout_alignParentRight="true"
@@ -39,12 +39,12 @@
                 android:clickable="true"
                 android:layout_margin="10dp"/>
             <TextView
-                android:text="특별한 순간"
+                android:text="슬픔"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner_deact"
                 android:gravity="center"
                 android:textColor="#EEEEEE"
                 android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner_deact"
                 android:gravity="center"
                 android:textColor="#EEEEEE"
                 android:layout_alignParentRight="true"
@@ -65,19 +65,31 @@
                 android:clickable="true"
                 android:layout_margin="10dp"/>
             <TextView
-                android:text="상속자들"
+                android:text="JMT"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
-                android:background="@drawable/rounded_corner"
+                android:background="@drawable/rounded_corner_deact"
                 android:gravity="center"
                 android:textColor="#EEEEEE"
                 android:layout_alignParentRight="true"
                 android:onClick="onClick"
                 android:clickable="true"
                 android:layout_margin="10dp"/>
-
+            <TextView
+                android:text="커욤"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5"
+                android:background="@drawable/rounded_corner_deact"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
 
         </LinearLayout>
     </HorizontalScrollView>

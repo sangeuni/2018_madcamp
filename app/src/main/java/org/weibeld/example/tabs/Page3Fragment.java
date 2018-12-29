@@ -73,8 +73,8 @@ public class Page3Fragment extends Fragment implements View.OnClickListener{
             alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // closing the application
-                    getActivity().finish();
-                    System.exit(0);
+                    //getActivity().finish();
+                    //System.exit(0);
                 }
             });
             alert.show();
