@@ -5,13 +5,14 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import org.weibeld.example.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the Toolbar as the activity's app bar (instead of the default ActionBar)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar); //if extend AppCompatActivity, 쓸 수 있다.
 
         // Connect the ViewPager to our custom PagerAdapter. The PagerAdapter supplies the pages
         // (fragments) to the ViewPager, which the ViewPager needs to display.

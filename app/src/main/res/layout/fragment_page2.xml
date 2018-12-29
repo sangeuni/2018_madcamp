@@ -1,26 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pageColor2">
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="모든 사진"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView0"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:text="친구"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView1"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:text="특별한 순간"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:text="여행"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:text="상속자들"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textColor="#EEEEEE"
+                android:layout_alignParentRight="true"
+                android:onClick="onClick"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
     <GridView
         android:id="@+id/gridView"
+        android:scrollbars="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_margin="5dp"
+        android:clickable="true"
         android:columnWidth="100dp"
         android:drawSelectorOnTop="true"
+        android:focusable="true"
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp"
-        android:focusable="true"
-        android:clickable="true"/>
+        android:verticalSpacing="0dp" />
 
 
 
-</FrameLayout>
+</LinearLayout>
