@@ -2,13 +2,17 @@ package org.weibeld.example.tabs;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -38,7 +42,6 @@ public class Page1Fragment extends Fragment {
         nameList = new ArrayList<NameListItem>();
         adapter = new NameListAdapter(getContext().getApplicationContext(), nameList);
         listView.setAdapter(adapter);
-        String[] items = new String[]{"item1", "item2", "item3"};
 
         try {
             nameList.clear();
@@ -65,6 +68,32 @@ public class Page1Fragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // listview event
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("");
+                builder.setMessage("");
+                builder.setPositiveButton("전화",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"));
+                                startActivity(dial);
+                            }
+                        });
+                builder.setNegativeButton("문자",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent sms = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"));
+                                startActivity(sms);
+                            }
+                        });
+                builder.show();
+            }
+        });
+
         return rootView;
     }
 
