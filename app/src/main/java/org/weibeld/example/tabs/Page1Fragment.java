@@ -94,17 +94,18 @@ public class Page1Fragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(name);
                 builder.setMessage(phone);
+                final String finalPhone = phone;
                 builder.setPositiveButton("전화",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"));
+                                Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + finalPhone));
                                 startActivity(dial);
                             }
                         });
                 builder.setNegativeButton("문자",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent sms = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"));
+                                Intent sms = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+finalPhone));
                                 startActivity(sms);
                             }
                         });
