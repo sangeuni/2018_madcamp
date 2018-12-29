@@ -25,13 +25,13 @@ public class NameListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int i) {
-        return contactList;
+    public String getItem(int i) {
+        return contactList.get(i).getName();
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override

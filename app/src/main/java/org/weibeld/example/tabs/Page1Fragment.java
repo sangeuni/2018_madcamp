@@ -47,12 +47,13 @@ public class Page1Fragment extends Fragment {
             nameList.clear();
             JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
             JSONArray jsonArray = jsonObject.getJSONArray("users"); // 목록들
-            int count = 0;
             String name;
+            //String phone;
+            int count = 0;
             while (count < jsonArray.length()) {
-
                 JSONObject object = jsonArray.getJSONObject(count);
                 name = object.getString("name");
+                //phone = object.getString("phone");
                 NameListItem item = new NameListItem(name);
                 nameList.add(item);
                 count++;
@@ -73,20 +74,38 @@ public class Page1Fragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String name = adapter.getItem(position);
+                String x;
+                String phone = null;
+                try {
+                    JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
+                    JSONArray jsonArray = jsonObject.getJSONArray("users"); // 목록들
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        x= object.getString("name");
+                        if(name.equals(x)){
+                            phone = object.getString("phone");
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("");
-                builder.setMessage("");
+                builder.setTitle(name);
+                builder.setMessage(phone);
+                final String finalPhone = phone;
                 builder.setPositiveButton("전화",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"));
+                                Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + finalPhone));
                                 startActivity(dial);
                             }
                         });
                 builder.setNegativeButton("문자",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent sms = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"));
+                                Intent sms = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+finalPhone));
                                 startActivity(sms);
                             }
                         });
@@ -96,7 +115,6 @@ public class Page1Fragment extends Fragment {
 
         return rootView;
     }
-
 
     public String loadJSONFromAssets() {
         String json = null;
