@@ -5,15 +5,18 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,13 +51,16 @@ public class Page1Fragment extends Fragment {
             JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
             JSONArray jsonArray = jsonObject.getJSONArray("users"); // 목록들
             String name;
+            int weight;
             //String phone;
             int count = 0;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
                 name = object.getString("name");
+                weight = object.getInt("weight");
+
                 //phone = object.getString("phone");
-                NameListItem item = new NameListItem(name);
+                NameListItem item = new NameListItem(name, weight);
                 nameList.add(item);
                 count++;
             }
@@ -69,6 +75,7 @@ public class Page1Fragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         // listview event
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
