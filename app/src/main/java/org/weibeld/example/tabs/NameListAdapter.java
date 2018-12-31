@@ -41,5 +41,4 @@ public class NameListAdapter extends BaseAdapter{
         itemText.setText(contactList.get(i).getName());
         return v;
     }
-
 }
