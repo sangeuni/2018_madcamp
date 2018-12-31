@@ -3,6 +3,8 @@ package org.weibeld.example.tabs;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 
 import android.content.Context;
@@ -26,20 +28,23 @@ import android.app.Fragment;
 import org.weibeld.example.R;
 
 import android.hardware.Camera;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.security.Policy;
 import java.util.Locale;
 
 /* Fragment used as page 3 */
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class Page3Fragment extends Fragment implements View.OnClickListener {
+    // fresh
     private CameraManager mCameraManager;
     private String mCameraId;
-    private TextView mTorchOnOffButton;
+//    private TextView mTorchOnOffButton;
     private Boolean isTorchOn;
 
-    //ver2
-    private static final long START_TIME_IN_MILLS = 300000;
+    // timer countdown
+    private static final long START_TIME_IN_MILLS = 3000;
 
     private TextView mTextViewCountDown;
     private Button mButtonStartPause;
@@ -51,11 +56,14 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
 
     private long mTimeLeftInMills = START_TIME_IN_MILLS;
 
+    public Vibrator vibe;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page3, container, false);
 
-        mTorchOnOffButton = (TextView) rootView.findViewById(R.id.btnSwitch);
+        //fresh
+//        mTorchOnOffButton = (TextView) rootView.findViewById(R.id.btnSwitch);
         isTorchOn = false;
         checkPermission();
 
@@ -65,9 +73,12 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-        mTorchOnOffButton.setOnClickListener(this);
+//        mTorchOnOffButton.setOnClickListener(this);
 
-        // timer.ver2
+        // timer vibrate
+        vibe = (Vibrator) inflater.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+
+        // timer countdown
         mTextViewCountDown = (TextView) rootView.findViewById(R.id.text_view_countdown);
 
         mButtonStartPause = (Button) rootView.findViewById(R.id.button_start_pause);
@@ -103,6 +114,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
             } else {
                 turnOnFlashLight();
                 isTorchOn = true;
+                vibe.vibrate(500);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +161,6 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // timer.ver2
     public void startTimer() {
         mcountDownTimer = new CountDownTimer(mTimeLeftInMills, 1000) {
             @Override
@@ -164,6 +175,10 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
                 mButtonStartPause.setText("start");
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 mButtonReset.setVisibility(View.VISIBLE);
+                turnOnFlashLight();
+                long[] pattern ={100,300,700,300,2000};
+                vibe.vibrate(pattern,0);
+                isTorchOn = true;
             }
         }.start();
         mTimerRunning = true;
@@ -183,6 +198,9 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         updateCountDownText();
         mButtonReset.setVisibility(View.INVISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
+        turnOffFlashLight();
+        isTorchOn = false;
+        vibe.cancel();
     }
 
     public void updateCountDownText() {
