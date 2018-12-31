@@ -32,7 +32,7 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
     ArrayList<Integer> activeTagIds = new ArrayList<Integer>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Toast.makeText(getActivity(), "refreshed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "refreshed", Toast.LENGTH_SHORT).show();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_page2, container, false);
@@ -43,24 +43,18 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
         GridViewAdapter adapter = new GridViewAdapter(this.getActivity(), R.layout.album_row, f);
         gridView.setAdapter(adapter);
 
-        view.findViewById(R.id.textView0).setOnClickListener(this);
+        view.findViewById(R.id.textView0).setOnClickListener(this); //모든 사진 태그는 일단 보류
         view.findViewById(R.id.textView1).setOnClickListener(this);
         view.findViewById(R.id.textView2).setOnClickListener(this);
         view.findViewById(R.id.textView3).setOnClickListener(this);
         view.findViewById(R.id.textView4).setOnClickListener(this);
         view.findViewById(R.id.textView5).setOnClickListener(this);
+
         return view;
     }
-    public void refresh() {
-        Fragment frg = null;
-        frg = this;
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
-    }
+
     public void onClick(View v) {
-        Integer ele = Integer.valueOf(v.getId()) - 2131165310; // textview 의 id 가 2131165310, 2131165311, ...
+        Integer ele = Integer.valueOf(v.getId()) - 2131165311; // textview 의 id 가 2131165310, 2131165311, ...
         // v.getId()를 activeTagIds 넣거나 빼기
         if ( activeTagIds.contains(ele) ) { // activate 된 태그면
             activeTagIds.remove(Integer.valueOf(ele)); // 그냥 써버리면 index꺼가 사라짐 ㅜㅜ
@@ -71,16 +65,32 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
             v.setBackgroundResource(R.drawable.rounded_corner);
         }
 
-        //Toast.makeText(getActivity(), String.valueOf(activeTagIds), Toast.LENGTH_SHORT).show();
+        if (ele == -1) { // 모든 태그 버튼
+            for (int i=0 ; i<5 ; i++)
+                activeTagIds.remove(Integer.valueOf(i));
+            getView().findViewById(R.id.textView1).setBackgroundResource(R.drawable.rounded_corner_deact);
+            getView().findViewById(R.id.textView2).setBackgroundResource(R.drawable.rounded_corner_deact);
+            getView().findViewById(R.id.textView3).setBackgroundResource(R.drawable.rounded_corner_deact);
+            getView().findViewById(R.id.textView4).setBackgroundResource(R.drawable.rounded_corner_deact);
+            getView().findViewById(R.id.textView5).setBackgroundResource(R.drawable.rounded_corner_deact);
+        }
 
-        refresh();
+        // grid view 에 데이터 넣는 부분
+        getData();
+        GridView gridView = (GridView) getActivity().findViewById(R.id.gridView);
+        GridViewAdapter adapter = new GridViewAdapter(this.getActivity(), R.layout.album_row, f);
+        gridView.setAdapter(adapter);
     }
     public boolean containActiveTags(JSONObject tags) {
+        // if 모든 버튼 clicked 이면, 걍 다 true
+        if (activeTagIds.contains(-1)) return true;
+
+        // tags 가 각각의 activeTag 에 대해 모두 true 면 true 반환
         try {
             for (int i = 0; i < activeTagIds.size(); i++) {
-                if (tags.getBoolean(String.valueOf(activeTagIds.get(i)))) return true;
+                if (!tags.getBoolean(String.valueOf(activeTagIds.get(i)))) return false;
             }
-            return false;
+            return true;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -89,26 +99,23 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
     public void getData() {
         // f 비우기
         f.clear();
-        // TODO activeTagIds 에 따라서 data 넣기
         try {
             JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
             JSONArray jsonArray = jsonObject.getJSONArray("TagsImg"); // 목록들
             int count = 0;
-            Integer img;
+            int img;
             JSONObject tags;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                img = object.getInt("Img");
+                img = object.getInt("img");
                 tags = object.getJSONObject("tags");
-                Log.e("json의 tags", String.valueOf(tags));
                 if (containActiveTags(tags)) f.add(img);
                 count++;
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Toast.makeText(getActivity(), String.valueOf(f), Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getActivity(), String.valueOf(activeTagIds) + String.valueOf(f.size()), Toast.LENGTH_SHORT).show();
     }
 
     public String loadJSONFromAssets() {
