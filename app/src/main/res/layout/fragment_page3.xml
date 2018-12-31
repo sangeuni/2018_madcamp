@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pageColor3"
-    >
+    android:orientation="vertical">
 
     <TextView
-        android:text="Start"
-        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSwitch"
-        android:background="@drawable/rounded_corner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dip"
-        android:gravity="center"
-        android:textColor="#EEEEEE"
-        android:layout_alignParentRight="true"
-        android:onClick="onClick"
-        android:clickable="true"
-        android:layout_margin="10dp"/>
-</RelativeLayout>
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
+        android:text="5 Min Snooze"
+        android:textSize="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="00:00"
+            android:textSize="60sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_countdown"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_start_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_countdown"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="90dp"
+                android:text="start" />
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_countdown"
+                android:layout_marginStart="11dp"
+                android:layout_toEndOf="@+id/button_start_pause"
+                android:text="reset"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

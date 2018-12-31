@@ -83,15 +83,15 @@ public class Page1Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String name = adapter.getItem(position);
-                String x;
+                String temp;
                 String phone = null;
                 try {
                     JSONObject jsonObject = new JSONObject(loadJSONFromAssets()); // 전체 파일
                     JSONArray jsonArray = jsonObject.getJSONArray("users"); // 목록들
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        x= object.getString("name");
-                        if(name.equals(x)){
+                        temp= object.getString("name");
+                        if(name.equals(temp)){
                             phone = object.getString("phone");
                         }
                     }
@@ -119,7 +119,6 @@ public class Page1Fragment extends Fragment {
                 builder.show();
             }
         });
-
         return rootView;
     }
 

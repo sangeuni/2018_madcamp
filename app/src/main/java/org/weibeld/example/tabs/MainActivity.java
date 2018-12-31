@@ -2,7 +2,9 @@ package org.weibeld.example.tabs;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 
 import org.weibeld.example.R;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends FragmentActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();

@@ -49,5 +49,4 @@ public class NameListAdapter extends BaseAdapter{
 
         return v;
     }
-
 }
