@@ -53,7 +53,7 @@ public class Page2Fragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        Integer ele = Integer.valueOf(v.getId()) - 2131165311; // textview 의 id 가 2131165310, 2131165311, ...
+        Integer ele = Integer.valueOf(v.getId()) - Integer.valueOf(R.id.textView1); // textview 의 id 가 2131165310, 2131165311, ...
         // v.getId()를 activeTagIds 넣거나 빼기
         if ( activeTagIds.contains(ele) ) { // activate 된 태그면
             activeTagIds.remove(Integer.valueOf(ele)); // 그냥 써버리면 index꺼가 사라짐 ㅜㅜ
