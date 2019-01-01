@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -40,7 +42,6 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
     // fresh
     private CameraManager mCameraManager;
     private String mCameraId;
-//    private TextView mTorchOnOffButton;
     private Boolean isTorchOn;
 
     // timer countdown
@@ -58,12 +59,41 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
 
     public Vibrator vibe;
 
+    // fragment layout
+    private LinearLayout timerLayout;
+    private GestureDetector gestureDetector = null;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page3, container, false);
+        // layout event
+        gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public void onLongPress(MotionEvent e) {
+                super.onLongPress(e);
+            }
+        });
 
-        //fresh
-//        mTorchOnOffButton = (TextView) rootView.findViewById(R.id.btnSwitch);
+        timerLayout = (LinearLayout) rootView.findViewById(R.id.timerLayout);
+        timerLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_UP:
+                        if(mTimeLeftInMills == 0){
+                            return true;
+                        }else {
+
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+        // fresh
         isTorchOn = false;
         checkPermission();
 
@@ -73,7 +103,6 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-//        mTorchOnOffButton.setOnClickListener(this);
 
         // timer vibrate
         vibe = (Vibrator) inflater.getContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -171,14 +200,14 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                mTimerRunning = false;
-                mButtonStartPause.setText("start");
-                mButtonStartPause.setVisibility(View.INVISIBLE);
-                mButtonReset.setVisibility(View.VISIBLE);
-                turnOnFlashLight();
-                long[] pattern ={100,300,700,300,2000};
-                vibe.vibrate(pattern,0);
-                isTorchOn = true;
+                    mTimerRunning = false;
+                    mButtonStartPause.setText("start");
+                    mButtonStartPause.setVisibility(View.INVISIBLE);
+                    mButtonReset.setVisibility(View.VISIBLE);
+                    turnOnFlashLight();
+                    long[] pattern = {100, 300, 700, 300, 2000};
+                    vibe.vibrate(pattern, 0);
+                    isTorchOn = true;
             }
         }.start();
         mTimerRunning = true;

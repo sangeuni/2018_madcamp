@@ -2,9 +2,10 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pageColor3"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
     <TextView
@@ -15,6 +16,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="50dp"
         android:text="5 Min Snooze"
+        android:textStyle=""
         android:textSize="50dp" />
 
     <LinearLayout
@@ -51,15 +53,14 @@
 
             <Button
                 android:id="@+id/button_reset"
+                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_view_countdown"
                 android:layout_marginStart="11dp"
                 android:layout_toEndOf="@+id/button_start_pause"
                 android:text="reset"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
