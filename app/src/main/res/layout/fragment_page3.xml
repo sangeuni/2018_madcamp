@@ -12,12 +12,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:text="Manner Maketh Nap"
+        android:textSize="30dp"
+        android:textStyle="" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         android:text="5 Min Snooze"
-        android:textStyle=""
-        android:textSize="50dp" />
+        android:textSize="50dp"
+        android:textStyle="" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,14 +64,14 @@
 
             <Button
                 android:id="@+id/button_reset"
-                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_view_countdown"
                 android:layout_marginStart="11dp"
                 android:layout_toEndOf="@+id/button_start_pause"
                 android:text="reset"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                tools:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
