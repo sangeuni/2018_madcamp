@@ -33,5 +33,5 @@ dependencies {
     implementation 'com.android.support:design:24.2.1'
     testImplementation 'junit:junit:4.12'
 
-
+    implementation 'com.github.igalata:Bubble-Picker:v0.2.4'
 }
