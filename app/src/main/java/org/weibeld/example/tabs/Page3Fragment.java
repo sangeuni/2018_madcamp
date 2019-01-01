@@ -1,8 +1,6 @@
 package org.weibeld.example.tabs;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
 import android.view.GestureDetector;
@@ -13,27 +11,20 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.app.Fragment;
 
 import org.weibeld.example.R;
 
-import android.hardware.Camera;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.security.Policy;
 import java.util.Locale;
 
 /* Fragment used as page 3 */
@@ -51,7 +42,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
     private Button mButtonStartPause;
     private Button mButtonReset;
 
-    private CountDownTimer mcountDownTimer;
+    private CountDownTimer mCountDownTimer;
 
     private boolean mTimerRunning;
 
@@ -83,10 +74,11 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                     case MotionEvent.ACTION_UP:
-                        if(mTimeLeftInMills == 0){
+                        if (mTimeLeftInMills == 0) {
                             return true;
-                        }else {
-
+                        } else {
+                            mTimeLeftInMills += 60000;
+                            updateCountDownText();
                         }
                         break;
                 }
@@ -191,7 +183,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
     }
 
     public void startTimer() {
-        mcountDownTimer = new CountDownTimer(mTimeLeftInMills, 1000) {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMills, 1000) {
             @Override
             public void onTick(long millisUtilFinished) {
                 mTimeLeftInMills = millisUtilFinished;
@@ -200,14 +192,14 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                    mTimerRunning = false;
-                    mButtonStartPause.setText("start");
-                    mButtonStartPause.setVisibility(View.INVISIBLE);
-                    mButtonReset.setVisibility(View.VISIBLE);
-                    turnOnFlashLight();
-                    long[] pattern = {100, 300, 700, 300, 2000};
-                    vibe.vibrate(pattern, 0);
-                    isTorchOn = true;
+                mTimerRunning = false;
+                mButtonStartPause.setText("start");
+                mButtonStartPause.setVisibility(View.INVISIBLE);
+                mButtonReset.setVisibility(View.VISIBLE);
+                turnOnFlashLight();
+                long[] pattern = {100, 300, 700, 300, 2000};
+                vibe.vibrate(pattern, 0);
+                isTorchOn = true;
             }
         }.start();
         mTimerRunning = true;
@@ -216,7 +208,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
     }
 
     public void pauseTimer() {
-        mcountDownTimer.cancel();
+        mCountDownTimer.cancel();
         mTimerRunning = false;
         mButtonStartPause.setText("start");
         mButtonReset.setVisibility(View.VISIBLE);

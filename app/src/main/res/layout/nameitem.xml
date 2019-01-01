@@ -10,8 +10,9 @@
         android:paddingLeft="18dp"
         android:padding="8dp"
         android:text="name"
-        android:textSize="15dp"
-        android:layout_margin="7dp"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:layout_margin="4dp"
         android:elevation="8dp"
         android:background="@drawable/rounded"/>
 

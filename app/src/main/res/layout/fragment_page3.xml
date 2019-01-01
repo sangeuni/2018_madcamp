@@ -12,20 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="0dp"
         android:text="Manner Maketh Nap"
-        android:textSize="30dp"
-        android:textStyle="" />
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="80dp"
         android:text="5 Min Snooze"
         android:textSize="50dp"
         android:textStyle="" />
@@ -60,7 +59,9 @@
                 android:layout_below="@+id/text_view_countdown"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="90dp"
-                android:text="start" />
+                android:text="start"
+                android:background="@drawable/btn_background"
+                android:textColor="#706c6c"/>
 
             <Button
                 android:id="@+id/button_reset"
@@ -71,7 +72,9 @@
                 android:layout_toEndOf="@+id/button_start_pause"
                 android:text="reset"
                 android:visibility="invisible"
-                tools:visibility="visible" />
+                tools:visibility="visible"
+                android:background="@drawable/btn_background"
+                android:textColor="#706c6c"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
