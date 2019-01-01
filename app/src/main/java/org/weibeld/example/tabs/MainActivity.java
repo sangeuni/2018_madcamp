@@ -23,7 +23,7 @@ public class MainActivity extends FragmentActivity {
     private final String[] PAGE_TITLES = new String[] {
             "Address",
             "Gallery",
-            "MMN"
+            "Alarm"
     };
 
     // The fragments that are used as the individual pages

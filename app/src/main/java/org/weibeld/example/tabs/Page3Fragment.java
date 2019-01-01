@@ -52,20 +52,12 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
 
     // fragment layout
     private LinearLayout timerLayout;
-    private GestureDetector gestureDetector = null;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_page3, container, false);
-        // layout event
-        gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public void onLongPress(MotionEvent e) {
-                super.onLongPress(e);
-            }
-        });
 
+        // layout event
         timerLayout = (LinearLayout) rootView.findViewById(R.id.timerLayout);
         timerLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -77,7 +69,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
                         if (mTimeLeftInMills == 0) {
                             return true;
                         } else {
-                            mTimeLeftInMills += 60000;
+                            mTimeLeftInMills += 30000;
                             updateCountDownText();
                         }
                         break;
@@ -85,6 +77,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
                 return true;
             }
         });
+
         // fresh
         isTorchOn = false;
         checkPermission();
@@ -212,6 +205,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         mTimerRunning = false;
         mButtonStartPause.setText("start");
         mButtonReset.setVisibility(View.VISIBLE);
+        vibe.cancel();
     }
 
     public void resetTimer() {
